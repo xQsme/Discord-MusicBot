@@ -8,7 +8,7 @@ module.exports = {
     channel: ["VIEW_CHANNEL", "SEND_MESSAGES", "EMBED_LINKS"],
     member: [],
   },
-  aliases: ["command", "commands", "cmd"],
+  aliases: ["command", "cmd"],
   /**
    *
    * @param {import("../structures/DiscordMusicBot")} client
@@ -16,30 +16,27 @@ module.exports = {
    * @param {string[]} args
    * @param {*} param3
    */
-   run: async (client, message, args, { GuildDB }) => {
+  run: async (client, message, args, { GuildDB }) => {
     let Commands = client.commands.map(
       (cmd) =>
-        `\`${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix}${
-          cmd.name
+        `\`${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix}${cmd.name
         }${cmd.usage ? " " + cmd.usage : ""}\` - ${cmd.description}`
     );
 
     let Embed = new MessageEmbed()
-            .setAuthor(
-              `Commands of ${client.user.username}`,
-              client.botconfig.IconURL
-            )
-            .setColor(client.botconfig.EmbedColor)
-            .setFooter(
-              `To get info of each command type ${
-                GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix
-              }help [Command] | Have a nice day!`
-            ).setDescription(`${Commands.join("\n")}
+      .setAuthor(
+        `Commands of ${client.user.username}`,
+        client.botconfig.IconURL
+      )
+      .setColor(client.botconfig.EmbedColor)
+      .setFooter(
+        `To get info of each command type ${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix
+        }help [Command] | Have a nice day!`
+      ).setDescription(`${Commands.join("\n")}
   
   Discord Music Bot Version: v${require("../package.json").version}
-  [✨ Support Server](${
-    client.botconfig.SupportServer
-  }) | [GitHub](https://github.com/SudhanPlayz/Discord-MusicBot) | By [SudhanPlayz](https://github.com/SudhanPlayz)`);
+  [✨ Support Server](${client.botconfig.SupportServer
+        }) | [GitHub](https://github.com/SudhanPlayz/Discord-MusicBot) | By [SudhanPlayz](https://github.com/SudhanPlayz)`);
     if (!args[0]) message.channel.send(Embed);
     else {
       let cmd =
@@ -56,22 +53,20 @@ module.exports = {
         .addField("Aliases", `\`${cmd.aliases.join(", ")}\``, true)
         .addField(
           "Usage",
-          `\`${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix}${
-            cmd.name
+          `\`${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix}${cmd.name
           }${cmd.usage ? " " + cmd.usage : ""}\``,
           true
         )
         .addField(
           "Permissions",
           "Member: " +
-            cmd.permissions.member.join(", ") +
-            "\nBot: " +
-            cmd.permissions.channel.join(", "),
+          cmd.permissions.member.join(", ") +
+          "\nBot: " +
+          cmd.permissions.channel.join(", "),
           true
         )
         .setFooter(
-          `Prefix - ${
-            GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix
+          `Prefix - ${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix
           }`
         );
 
@@ -79,7 +74,7 @@ module.exports = {
     }
   },
 
-SlashCommand: {
+  SlashCommand: {
     options: [
       {
         name: "command",
@@ -100,27 +95,24 @@ SlashCommand: {
     run: async (client, interaction, args, { GuildDB }) => {
       let Commands = client.commands.map(
         (cmd) =>
-          `\`${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix}${
-            cmd.name
+          `\`${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix}${cmd.name
           }${cmd.usage ? " " + cmd.usage : ""}\` - ${cmd.description}`
       );
-  
+
       let Embed = new MessageEmbed()
-            .setAuthor(
-              `Commands of ${client.user.username}`,
-              client.botconfig.IconURL
-            )
-            .setColor(client.botconfig.EmbedColor)
-            .setFooter(
-              `To get info of each command type ${
-                GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix
-              }help [Command] | Have a nice day!`
-            ).setDescription(`${Commands.join("\n")}
+        .setAuthor(
+          `Commands of ${client.user.username}`,
+          client.botconfig.IconURL
+        )
+        .setColor(client.botconfig.EmbedColor)
+        .setFooter(
+          `To get info of each command type ${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix
+          }help [Command] | Have a nice day!`
+        ).setDescription(`${Commands.join("\n")}
   
   Discord Music Bot Version: v${require("../package.json").version}
-  [✨ Support Server](${
-    client.botconfig.SupportServer
-  }) | [GitHub](https://github.com/SudhanPlayz/Discord-MusicBot) | By [SudhanPlayz](https://github.com/SudhanPlayz)`);
+  [✨ Support Server](${client.botconfig.SupportServer
+          }) | [GitHub](https://github.com/SudhanPlayz/Discord-MusicBot) | By [SudhanPlayz](https://github.com/SudhanPlayz)`);
       if (!args) return interaction.send(Embed);
       else {
         let cmd =
@@ -128,7 +120,7 @@ SlashCommand: {
           client.commands.find((x) => x.aliases && x.aliases.includes(args[0].value));
         if (!cmd)
           return client.sendTime(interaction, `❌ | Unable to find that command.`);
-  
+
         let embed = new MessageEmbed()
           .setAuthor(`Command: ${cmd.name}`, client.botconfig.IconURL)
           .setDescription(cmd.description)
@@ -137,26 +129,25 @@ SlashCommand: {
           .addField("Aliases", cmd.aliases.join(", "), true)
           .addField(
             "Usage",
-            `\`${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix}${
-              cmd.name
+            `\`${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix}${cmd.name
             }\`${cmd.usage ? " " + cmd.usage : ""}`,
             true
           )
           .addField(
             "Permissions",
             "Member: " +
-              cmd.permissions.member.join(", ") +
-              "\nBot: " +
-              cmd.permissions.channel.join(", "),
+            cmd.permissions.member.join(", ") +
+            "\nBot: " +
+            cmd.permissions.channel.join(", "),
             true
           )
           .setFooter(
-            `Prefix - ${
-              GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix
+            `Prefix - ${GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix
             }`
           );
-  
+
         interaction.send(embed);
       }
-  },
-}};
+    },
+  }
+};
