@@ -1,3 +1,7 @@
+# Config
+application.yml
+botconfig.js
+
 # IDE
 .idea/
 
